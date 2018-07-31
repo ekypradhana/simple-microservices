@@ -1,0 +1,34 @@
+syntax = "proto3";
+
+package simple.microservices.product;
+option go_package = "product";
+
+service Product {
+    rpc Save(ProductModel) returns (ResultInfo);
+    rpc Get(ParamString) returns (ListProductModel);
+    rpc Delete(ParamString) returns (ResultInfo);
+    rpc UpdateStock(UpdateStockParam) returns (ResultInfo);
+}
+
+message ProductModel {
+    string product_id = 1;
+    int32 stock = 2;
+}
+
+message UpdateStockParam {
+    string product_id = 1;
+    int32 amount = 2;
+}
+
+message ParamString {
+    string id = 1;
+}
+
+message ListProductModel {
+    repeated ProductModel result = 1;
+}
+
+message ResultInfo {
+    string status = 1;
+    string message = 2;
+}
