@@ -2,6 +2,7 @@ package productserver
 
 import (
 	"context"
+	"fmt"
 	pb "simple-microservices/product/rpc/product"
 
 	"gopkg.in/mgo.v2/bson"
@@ -53,4 +54,41 @@ func (s *Server) UpdateStock(ctx context.Context, param *pb.UpdateStockParam) (*
 	}
 
 	return &pb.ResultInfo{Message: "Product stock updated successfully!", Status: "OK"}, nil
+}
+
+func (s *Server) Get(ctx context.Context, param *pb.ParamString) (*pb.ListProductModel, error) {
+	dbcontext := NewContext()
+	defer dbcontext.Close()
+
+	collection := dbcontext.DbCollection(PRODUCT_COLLECTION)
+	ProductId := param.Id
+	productModel := []*pb.ProductModel{}
+	var err error
+	if ProductId == "" {
+		// populate all datas
+		err = collection.Find(bson.M{}).All(&productModel)
+	} else {
+		// get data based on specific productid
+		err = collection.Find(bson.M{"productid": ProductId}).All(&productModel)
+	}
+	return &pb.ListProductModel{Result: productModel}, err
+}
+
+func (s *Server) Delete(ctx context.Context, param *pb.ParamString) (*pb.ResultInfo, error) {
+	if param.Id == "" {
+		return &pb.ResultInfo{Message: "Failed to delete data!", Status: "NOK"}, fmt.Errorf("ID is required")
+	}
+	dbcontext := NewContext()
+	defer dbcontext.Close()
+
+	c := dbcontext.DbCollection(PRODUCT_COLLECTION)
+	ProductId := param.Id
+
+	err := c.Remove(bson.M{"productid": ProductId})
+
+	if err != nil {
+		return &pb.ResultInfo{Message: "Failed to delete data!", Status: "NOK"}, err
+	}
+
+	return &pb.ResultInfo{Message: "Data successfully deleted!", Status: "OK"}, nil
 }

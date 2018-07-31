@@ -4,4 +4,4 @@
     "MongoDBUser"	: "",
     "MongoDBPwd"	: "",
     "Database"    : "simple-microservices"
-  }
+}
