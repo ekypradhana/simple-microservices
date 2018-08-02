@@ -22,16 +22,16 @@ func main() {
 	}
 	fmt.Println("Update product response : ", updateStock)
 
-	getProduct, err := client.Get(context.Background(), &product.ParamString{Id: "P-100"})
-	if err != nil {
-		fmt.Println(err.Error())
-	}
-	fmt.Println("Get product response : ", getProduct)
+	// getProduct, err := client.Get(context.Background(), &product.ParamString{Id: "P-100"})
+	// if err != nil {
+	// 	fmt.Println(err.Error())
+	// }
+	// fmt.Println("Get product response : ", getProduct)
 
-	deleteProduct, err := client.Delete(context.Background(), &product.ParamString{Id: "P-100"})
-	if err != nil {
-		fmt.Println(err.Error())
-	}
-	fmt.Println("Delete product response : ", deleteProduct)
+	// deleteProduct, err := client.Delete(context.Background(), &product.ParamString{Id: "P-100"})
+	// if err != nil {
+	// 	fmt.Println(err.Error())
+	// }
+	// fmt.Println("Delete product response : ", deleteProduct)
 
 }

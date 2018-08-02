@@ -9,7 +9,7 @@ import (
 )
 
 func main() {
-	common.StartUp("config.json")
+	common.StartUp("config/config.json")
 	server := &productserver.Server{}
 	twirpHandler := product.NewProductServer(server, nil)
 	fmt.Println("Product RPC Server is listening on port : ", common.AppConfig.ServerPort)

@@ -10,6 +10,7 @@ service Transaction {
 message TransactionModel {
     string customer_name = 1;
     string product_id = 2;
+    int32 order_amount = 3;
 }
 
 message ResultInfo {

@@ -1,0 +1,19 @@
+syntax = "proto3";
+
+package simple.microservices.transaction;
+option go_package = "transaction";
+
+service Transaction {
+    rpc Order(TransactionModel) returns (ResultInfo);
+}
+
+message TransactionModel {
+    string customer_name = 1;
+    string product_id = 2;
+    int32 order_amount = 3;
+}
+
+message ResultInfo {
+    string status = 1;
+    string message = 2;
+}

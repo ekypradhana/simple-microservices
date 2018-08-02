@@ -1,0 +1,5 @@
+{
+    "ListeningPort" : "8080",
+    "TransactionService" : "http://transaction:8080",
+    "ProductService" : "http://product:8080"
+}

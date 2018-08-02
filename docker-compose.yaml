@@ -1,0 +1,49 @@
+version: '2'
+services:
+  mongo:
+    image: mongo:3.4.9-jessie
+    ports:            # DELETE PORTS FOR PRODUCTION
+      - "27123:27017"
+    volumes:
+      - './mongo-volume/:/data/db'
+  product:
+    build:
+      context: product
+      dockerfile: Dockerfile
+    links:
+      - mongo 
+    depends_on:
+      - mongo
+    volumes:
+      - './product-volume/config/:/go/src/simple-microservices/product/cmd/server/config'
+    command: "./main"
+  
+  transaction:
+    build:
+      context: transaction
+      dockerfile: Dockerfile
+    links:
+      - mongo 
+    depends_on:
+      - mongo
+    volumes:
+      - './transaction-volume/config/:/go/src/simple-microservices/transaction/cmd/server/config'
+    command: "./main"
+  
+  webapp:
+    build:
+      context: webapp
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080"
+    links:
+      - mongo
+      - product
+      - transaction
+    depends_on:
+      - mongo
+      - product
+      - transaction
+    volumes:
+      - './webapp-volume/config/:/go/src/simple-microservices/webapp/config'
+    command: "./main"

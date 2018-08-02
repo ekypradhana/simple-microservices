@@ -1,0 +1,7 @@
+{
+    "ServerPort"  : "8080",
+    "MongoDBHost" : "mongo:27017",
+    "MongoDBUser"	: "",
+    "MongoDBPwd"	: "",
+    "Database"    : "simple-microservices"
+}
